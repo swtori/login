@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "1744473168982",
+      "email": "sato@gmail.com",
+      "pseudo": "satori",
+      "password": "pwd"
+    },
+    {
+      "id": "1744473211030",
+      "email": "abc@gmail.com",
+      "pseudo": "molux",
+      "password": "pd"
+    },
+    {
+      "id": "1744473442281",
+      "email": "coraline@gmail.com",
+      "pseudo": "Corqline",
+      "password": "18Seu588!"
+    },
+    {
+      "id": "1744474562627",
+      "email": "lydiepastorel@gmail.com",
+      "pseudo": "LydieLaMeilleur",
+      "password": "123456"
+    },
+    {
+      "id": "1744528579681",
+      "email": "user@gmail.com",
+      "pseudo": "user",
+      "password": "pwd"
+    }
+  ]
+}

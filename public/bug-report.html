@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signalement de Bug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .bug-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        button:hover {
+            background-color: #166fe5;
+        }
+        h1 {
+            text-align: center;
+            color: #1877f2;
+            margin-bottom: 2rem;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #28a745;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bug-container">
+        <h1>Signalement de Bug</h1>
+        <form id="bugReportForm">
+            <input type="hidden" id="userEmail" name="userEmail">
+            <input type="hidden" id="userPseudo" name="userPseudo">
+            <div class="form-group">
+                <label for="category">Catégorie du bug</label>
+                <select id="category" name="category" required>
+                    <option value="">Sélectionnez une catégorie</option>
+                    <option value="construction">Construction</option>
+                    <option value="server">Server</option>
+                    <option value="interface">Interface</option>
+                    <option value="performance">Performance</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description du bug</label>
+                <textarea id="description" name="description" required 
+                    placeholder="Décrivez le bug en détail, en incluant les étapes pour le reproduire si possible..."></textarea>
+            </div>
+            <button type="submit">Envoyer le signalement</button>
+        </form>
+        <div id="successMessage" class="success-message">
+            Votre signalement a été envoyé avec succès !
+        </div>
+    </div>
+
+    <script>
+        // Récupérer les informations de l'utilisateur depuis le localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData) {
+                document.getElementById('userEmail').value = userData.email;
+                document.getElementById('userPseudo').value = userData.pseudo;
+            } else {
+                // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+                window.location.href = '/';
+            }
+        });
+
+        document.getElementById('bugReportForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const category = document.getElementById('category').value;
+            const description = document.getElementById('description').value;
+            const email = document.getElementById('userEmail').value;
+            const pseudo = document.getElementById('userPseudo').value;
+
+            console.log('Données à envoyer:', { category, description, email, pseudo });
+
+            try {
+                const response = await fetch('/api/bug-report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ category, description, email, pseudo })
+                });
+
+                console.log('Réponse du serveur:', response);
+
+                if (response.ok) {
+                    document.getElementById('bugReportForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Erreur lors de l\'envoi du signalement');
+                }
+            } catch (error) {
+                alert('Erreur lors de l\'envoi du signalement');
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html> 

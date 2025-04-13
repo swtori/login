@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de Devis - Minecraft Server</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2E7D32;
+            --dark-color: #1B5E20;
+            --light-color: #81C784;
+            --text-color: #333;
+            --background-color: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-top: 60px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--light-color);
+        }
+
+        /* Devis Form */
+        .devis-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .devis-container h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group p {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #666;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .social-links {
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--light-color);
+        }
+
+        .footer-links {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light-color);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .devis-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">Minecraft Server</div>
+            <nav>
+                <ul>
+                    <li><a href="home.html"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="devis.html"><i class="fas fa-file-invoice"></i> Devis</a></li>
+                    <li><a href="index.html"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="devis-container">
+        <h1>Création de Devis</h1>
+        <form id="devisForm">
+            <div class="form-group">
+                <label>Voulez-vous des organiques ?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="organiques" value="oui" required>
+                        Oui
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="organiques" value="non">
+                        Non
+                    </label>
+                </div>
+                <p id="organiquesMessage" style="display: none;">Les organiques sont assez complexes et devront être discutés par chat</p>
+            </div>
+
+            <div class="form-group">
+                <label>Terraforming ?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="terraforming" value="oui" required>
+                        Oui
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="terraforming" value="non">
+                        Non
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Painting ?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="painting" value="oui" required>
+                        Oui
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="painting" value="non">
+                        Non
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Bâtiments ?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="batiments" value="oui" required>
+                        Oui
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="batiments" value="non">
+                        Non
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">Générer le Devis</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <div class="footer-links">
+            <a href="cgu.html">Conditions Générales d'Utilisation</a>
+            <a href="cgv.html">Conditions Générales de Vente</a>
+            <a href="mentions-legales.html">Mentions Légales</a>
+            <a href="politique-confidentialite.html">Politique de Confidentialité</a>
+        </div>
+        <p>&copy; 2024 Minecraft Server. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Gestion du message pour les organiques
+        document.querySelectorAll('input[name="organiques"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const message = document.getElementById('organiquesMessage');
+                message.style.display = this.value === 'oui' ? 'block' : 'none';
+            });
+        });
+
+        // Gestion du formulaire
+        document.getElementById('devisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                organiques: document.querySelector('input[name="organiques"]:checked').value,
+                terraforming: document.querySelector('input[name="terraforming"]:checked').value,
+                painting: document.querySelector('input[name="painting"]:checked').value,
+                batiments: document.querySelector('input[name="batiments"]:checked').value
+            };
+
+            // Ici, vous pouvez envoyer les données au serveur
+            console.log('Données du devis:', formData);
+            
+            // Afficher un message de succès
+            alert('Votre demande de devis a été enregistrée. Nous vous contacterons bientôt pour discuter des détails.');
+        });
+    </script>
+</body>
+</html> 
