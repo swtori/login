@@ -103,49 +103,47 @@
     </div>
 
     <script>
-        // Récupérer les informations de l'utilisateur depuis le localStorage
-        document.addEventListener('DOMContentLoaded', function() {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            if (userData) {
-                document.getElementById('userEmail').value = userData.email;
-                document.getElementById('userPseudo').value = userData.pseudo;
-            } else {
-                // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-                window.location.href = '/';
-            }
-        });
+        // Vérification de la connexion
+        const userEmail = localStorage.getItem('userEmail');
+        const userPseudo = localStorage.getItem('userPseudo');
 
+        if (!userEmail || !userPseudo) {
+            window.location.href = 'login.html';
+        }
+
+        // Gestion du formulaire
         document.getElementById('bugReportForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const category = document.getElementById('category').value;
-            const description = document.getElementById('description').value;
-            const email = document.getElementById('userEmail').value;
-            const pseudo = document.getElementById('userPseudo').value;
-
-            console.log('Données à envoyer:', { category, description, email, pseudo });
+            const formData = {
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value,
+                email: userEmail,
+                pseudo: userPseudo
+            };
 
             try {
                 const response = await fetch('/api/bug-report', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'x-user-email': userEmail,
+                        'x-user-pseudo': userPseudo
                     },
-                    body: JSON.stringify({ category, description, email, pseudo })
+                    body: JSON.stringify(formData)
                 });
 
-                console.log('Réponse du serveur:', response);
-
+                const data = await response.json();
+                
                 if (response.ok) {
-                    document.getElementById('bugReportForm').style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
+                    alert('Votre signalement a été envoyé avec succès !');
+                    document.getElementById('bugReportForm').reset();
                 } else {
-                    const data = await response.json();
-                    alert(data.error || 'Erreur lors de l\'envoi du signalement');
+                    alert('Erreur: ' + data.error);
                 }
             } catch (error) {
-                alert('Erreur lors de l\'envoi du signalement');
-                console.error(error);
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'envoi du signalement');
             }
         });
     </script>

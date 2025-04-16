@@ -3,186 +3,653 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Serveur Minecraft - Accueil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        :root {
+            --primary-color: #00CDD6;
+            --secondary-color: #00A3AB;
+            --dark-color: #008B92;
+            --light-color: #66E5EC;
+            --text-color: #333;
+            --background-color: #f5f5f5;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
-        .login-container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            position: fixed;
             width: 100%;
-            max-width: 400px;
+            top: 0;
+            z-index: 1000;
         }
-        .form-group {
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--light-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('img/snkPalaisRender.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
             margin-bottom: 1rem;
         }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #1877f2;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        button:hover {
-            background-color: #166fe5;
-        }
-        h1 {
-            text-align: center;
-            color: #1877f2;
-            margin-bottom: 1.5rem;
-        }
-        .create-account {
-            text-align: center;
-            margin-top: 1rem;
-        }
-        .create-account a {
-            color: #1877f2;
-            text-decoration: none;
+
+        .feature-card h3 {
             font-weight: 500;
+            margin-bottom: 1rem;
         }
-        .create-account a:hover {
+
+        .feature-card p {
+            font-weight: 300;
+        }
+
+        /* Server Status */
+        .server-status {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .status-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+        }
+
+        .status-indicator.offline {
+            background-color: #f44336;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--light-color);
+        }
+
+        /* Footer Links */
+        .footer-links {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light-color);
             text-decoration: underline;
         }
-        .signup-form {
-            display: none;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #ddd;
+
+        /* Media Queries pour le responsive */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
         }
-        .signup-form.show {
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            nav li {
+                margin: 0.25rem;
+            }
+
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 4rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .features {
+                padding: 2rem 1rem;
+            }
+
+            .features h2 {
+                font-size: 2rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .status-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .status-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Menu hamburger pour mobile */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                display: none;
+            }
+
+            nav.active {
+                display: block;
+                width: 100%;
+            }
+
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav li {
+                width: 100%;
+                text-align: center;
+                padding: 0.5rem;
+            }
+        }
+
+        .devis-button {
             display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .devis-button:hover {
+            background-color: var(--secondary-color);
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Connexion</h1>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+    <header>
+        <div class="nav-container">
+            <div class="logo">Lusciana Builds</div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </div>
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Se connecter</button>
-        </form>
-        <div class="create-account">
-            <a href="#" id="showSignup">Créer un compte</a>
+            <nav>
+                <ul>
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="#" id="devisLink"><i class="fas fa-file-invoice"></i> Devis</a></li>
+                    <li><a href="#" id="bugLink"><i class="fas fa-bug"></i> Signaler un Bug</a></li>
+                    <li id="userInfo" style="display: none;">
+                        <span style="color: var(--light-color);">
+                            <i class="fas fa-user"></i> 
+                            <span id="userPseudo"></span>
+                        </span>
+                    </li>
+                    <li id="logoutLink" style="display: none;">
+                        <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    </li>
+                    <li id="loginLink"><a href="/login.html"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+                </ul>
+            </nav>
         </div>
-        <form id="signupForm" class="signup-form">
-            <h2>Créer un compte</h2>
-            <div class="form-group">
-                <label for="signupEmail">Adresse email</label>
-                <input type="email" id="signupEmail" name="signupEmail" required>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Lusciana Builds</h1>
+            <p>Des builds Minecraft uniques et personnalisés pour votre serveur</p>
+            <a href="devis.html" class="cta-button">Demander un devis</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Nos Services</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-castle"></i>
+                </div>
+                <h3>Builds Médiévaux</h3>
+                <p>Châteaux, villages et structures médiévales détaillées</p>
             </div>
-            <div class="form-group">
-                <label for="signupPseudo">Pseudo</label>
-                <input type="text" id="signupPseudo" name="signupPseudo" required>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <h3>Builds Modernes</h3>
+                <p>Architecture contemporaine et urbaine</p>
             </div>
-            <div class="form-group">
-                <label for="signupPassword">Mot de passe</label>
-                <input type="password" id="signupPassword" name="signupPassword" required>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h3>Terrain Building</h3>
+                <p>Paysages naturels et terrains personnalisés</p>
             </div>
-            <button type="submit">S'inscrire</button>
-        </form>
-    </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Maps Mini-Jeux</h3>
+                <p>Création de maps personnalisées pour vos mini-jeux</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3>Spawns & Hubs</h3>
+                <p>Zones de spawn et hubs uniques pour votre serveur</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <h3>Projets Personnalisés</h3>
+                <p>Réalisation de tout type de build selon vos besoins</p>
+                <a href="devis.html" class="devis-button">Demander un Devis</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="server-status">
+        <div class="status-container">
+            <div class="status-item">
+                <div class="status-indicator"></div>
+                <span>Serveur en ligne</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-users"></i>
+                <span>24/50 joueurs</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-clock"></i>
+                <span>Uptime: 99.9%</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/W2yFBQTH2f" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <div class="footer-links">
+            <a href="cgu.html">Conditions Générales d'Utilisation</a>
+            <a href="cgv.html">Conditions Générales de Vente</a>
+            <a href="mentions-legales.html">Mentions Légales</a>
+            <a href="politique-confidentialite.html">Politique de Confidentialité</a>
+        </div>
+        <p>&copy; 2024 Lusciana Builds. Tous droits réservés.</p>
+    </footer>
 
     <script>
-        document.getElementById('showSignup').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('signupForm').classList.toggle('show');
+        // Fonction pour ajouter automatiquement les en-têtes d'authentification à toutes les requêtes fetch
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options = {}) {
+            const userEmail = localStorage.getItem('userEmail');
+            const userPseudo = localStorage.getItem('userPseudo');
+            
+            if (userEmail && userPseudo) {
+                options.headers = options.headers || {};
+                options.headers['x-user-email'] = userEmail;
+                options.headers['x-user-pseudo'] = userPseudo;
+            }
+            
+            return originalFetch(url, options);
+        };
+        
+        // Menu hamburger pour mobile
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
         });
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    localStorage.setItem('userEmail', email);
-                    localStorage.setItem('userPseudo', data.user.pseudo);
-                    window.location.href = '/home.html';
-                } else {
-                    alert(data.error);
-                }
-            } catch (error) {
-                alert('Erreur lors de la connexion');
-                console.error(error);
-            }
+        // Fermer le menu quand on clique sur un lien
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('nav').classList.remove('active');
+            });
         });
 
-        document.getElementById('signupForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('signupEmail').value;
-            const pseudo = document.getElementById('signupPseudo').value;
-            const password = document.getElementById('signupPassword').value;
-
-            console.log('Données d\'inscription:', { email, pseudo, password });
-
+        // Mettre à jour le statut du serveur en temps réel
+        async function updateServerStatus() {
             try {
-                const response = await fetch('/api/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, pseudo, password })
+                const response = await fetch('/api/server-status');
+                const data = await response.json();
+                
+                // Mettre à jour l'indicateur de statut
+                const statusIndicator = document.querySelector('.status-indicator');
+                statusIndicator.classList.toggle('offline', !data.online);
+                
+                // Mettre à jour le nombre de joueurs
+                const playerCount = document.querySelector('.status-item:nth-child(2) span');
+                playerCount.textContent = `${data.players}/${data.maxPlayers} joueurs`;
+                
+                // Mettre à jour l'uptime
+                const uptime = document.querySelector('.status-item:nth-child(3) span');
+                uptime.textContent = `Uptime: ${data.uptime}%`;
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour du statut:', error);
+            }
+        }
+
+        // Mettre à jour le statut toutes les 30 secondes
+        setInterval(updateServerStatus, 30000);
+        updateServerStatus();
+
+        // Vérification de l'authentification au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            const userEmail = localStorage.getItem('userEmail');
+            const userPseudo = localStorage.getItem('userPseudo');
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
+            const userInfo = document.getElementById('userInfo');
+            const devisLink = document.getElementById('devisLink');
+            const bugLink = document.getElementById('bugLink');
+
+            if (userEmail && userPseudo) {
+                loginLink.style.display = 'none';
+                logoutLink.style.display = 'block';
+                userInfo.style.display = 'block';
+                document.getElementById('userPseudo').textContent = userPseudo;
+                
+                // Gestion du lien "Signaler un Bug"
+                bugLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const userEmail = localStorage.getItem('userEmail');
+                    const userPseudo = localStorage.getItem('userPseudo');
+                    
+                    if (userEmail && userPseudo) {
+                        window.location.href = '/bug-report.html';
+                    } else {
+                        window.location.href = '/login.html';
+                    }
                 });
 
-                console.log('Réponse du serveur:', response);
+                // Gestion du lien "Demander un Devis"
+                devisLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const userEmail = localStorage.getItem('userEmail');
+                    const userPseudo = localStorage.getItem('userPseudo');
+                    
+                    if (userEmail && userPseudo) {
+                        window.location.href = '/devis.html';
+                    } else {
+                        window.location.href = '/login.html';
+                    }
+                });
+            } else {
+                loginLink.style.display = 'block';
+                logoutLink.style.display = 'none';
+                userInfo.style.display = 'none';
+                
+                // Redirection directe vers la page de bug report pour les liens protégés
+                bugLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const userEmail = localStorage.getItem('userEmail');
+                    const userPseudo = localStorage.getItem('userPseudo');
+                    
+                    if (userEmail && userPseudo) {
+                        window.location.href = '/bug-report.html';
+                    } else {
+                        window.location.href = '/login.html';
+                    }
+                });
 
-                const data = await response.json();
-                console.log('Données de la réponse:', data);
-
-                if (response.ok) {
-                    alert('Compte créé avec succès !');
-                    // Masquer le formulaire d'inscription
-                    document.getElementById('signupForm').classList.remove('show');
-                } else {
-                    alert(data.error);
-                }
-            } catch (error) {
-                alert('Erreur lors de la création du compte');
-                console.error('Erreur détaillée:', error);
+                devisLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const userEmail = localStorage.getItem('userEmail');
+                    const userPseudo = localStorage.getItem('userPseudo');
+                    
+                    if (userEmail && userPseudo) {
+                        window.location.href = '/devis.html';
+                    } else {
+                        window.location.href = '/login.html';
+                    }
+                });
             }
+
+            // Gestion de la déconnexion
+            document.getElementById('logoutButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userPseudo');
+                window.location.href = '/';
+            });
         });
     </script>
 </body>

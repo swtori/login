@@ -187,6 +187,74 @@
                 flex-direction: column;
             }
         }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .organique-size-group {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .organique-size-group label {
+            min-width: 150px;
+        }
+
+        .organique-input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .besoins-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .besoins-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .date-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .date-input {
+            width: 140px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .date-text {
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -195,7 +263,7 @@
             <div class="logo">Minecraft Server</div>
             <nav>
                 <ul>
-                    <li><a href="home.html"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
                     <li><a href="devis.html"><i class="fas fa-file-invoice"></i> Devis</a></li>
                     <li><a href="index.html"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
                 </ul>
@@ -205,7 +273,23 @@
 
     <div class="devis-container">
         <h1>Création de Devis</h1>
+        <div id="devisHistory" style="margin-bottom: 2rem;"></div>
         <form id="devisForm">
+            <div class="form-group">
+                <label>Exclusivité du build</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="exclusivite" value="oui" required>
+                        Oui
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="exclusivite" value="non">
+                        Non
+                    </label>
+                </div>
+                <p>L'exclusivité signifie que le build ne sera pas revendu à d'autres clients. Cela peut affecter le prix final.</p>
+            </div>
+
             <div class="form-group">
                 <label>Voulez-vous des organiques ?</label>
                 <div class="radio-group">
@@ -217,6 +301,20 @@
                         <input type="radio" name="organiques" value="non">
                         Non
                     </label>
+                </div>
+                <div id="organiquesDetails" style="display: none; margin-top: 1rem;">
+                    <div class="organique-size-group">
+                        <label>Grands organiques</label>
+                        <input type="number" name="organiques_grand" min="0" value="0" class="organique-input">
+                    </div>
+                    <div class="organique-size-group">
+                        <label>Petits organiques</label>
+                        <input type="number" name="organiques_petit" min="0" value="0" class="organique-input">
+                    </div>
+                    <div class="organique-size-group">
+                        <label>Très petits organiques</label>
+                        <input type="number" name="organiques_tres_petit" min="0" value="0" class="organique-input">
+                    </div>
                 </div>
                 <p id="organiquesMessage" style="display: none;">Les organiques sont assez complexes et devront être discutés par chat</p>
             </div>
@@ -250,20 +348,65 @@
             </div>
 
             <div class="form-group">
-                <label>Bâtiments ?</label>
+                <label>Type d'eau ?</label>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="batiments" value="oui" required>
-                        Oui
+                        <input type="radio" name="eau" value="vraie" required>
+                        Vraie eau
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="batiments" value="non">
-                        Non
+                        <input type="radio" name="eau" value="fausse">
+                        Fausse eau
                     </label>
                 </div>
+                <p>La vraie eau est plus chère mais plus réaliste, la fausse eau est plus économique</p>
             </div>
 
-            <button type="submit" class="submit-button">Générer le Devis</button>
+            <div class="form-group">
+                <label>Type d'arbres ?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="arbres" value="homemade" required>
+                        Homemade trees
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="arbres" value="bundle">
+                        Bundle
+                    </label>
+                </div>
+                <p>Les homemade trees sont des arbres personnalisés, les bundles sont des packs d'arbres prêts à l'emploi</p>
+            </div>
+
+            <div class="form-group">
+                <label>Type de construction</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="type" value="interieur">
+                        Intérieur
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="type" value="exterieur">
+                        Extérieur
+                    </label>
+                </div>
+                <p>Les constructions intérieures sont généralement plus détaillées et plus chères</p>
+            </div>
+
+            <div class="form-group">
+                <label>Date d'approximation souhaitée</label>
+                <div class="date-group">
+                    <input type="number" name="jours" min="1" placeholder="Nombre de jours" class="date-input">
+                    <span class="date-text">jours</span>
+                </div>
+                <p>Indiquez le nombre de jours approximatif que vous souhaitez pour la réalisation</p>
+            </div>
+
+            <div class="form-group">
+                <label>Besoins précis</label>
+                <textarea name="besoins" rows="4" placeholder="Décrivez vos besoins précis ici... (ex: style de construction, thème, couleurs préférées, etc.)" class="besoins-input"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Demander un devis</button>
         </form>
     </div>
 
@@ -283,31 +426,138 @@
     </footer>
 
     <script>
-        // Gestion du message pour les organiques
-        document.querySelectorAll('input[name="organiques"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const message = document.getElementById('organiquesMessage');
-                message.style.display = this.value === 'oui' ? 'block' : 'none';
+        // Vérification de la connexion
+        const userEmail = localStorage.getItem('userEmail');
+        const userPseudo = localStorage.getItem('userPseudo');
+
+        // Ne rediriger vers login que si on essaie d'accéder à une page protégée
+        if (!userEmail || !userPseudo) {
+            // Vérifier si on est sur une page protégée
+            if (window.location.pathname.includes('devis.html') || 
+                window.location.pathname.includes('bug-report.html')) {
+                // Ne pas rediriger si on clique sur le lien Accueil
+                if (!window.location.href.includes('index.html')) {
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        // Gestion des détails des organiques
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioButtons = document.querySelectorAll('input[name="organiques"]');
+            const details = document.getElementById('organiquesDetails');
+            const message = document.getElementById('organiquesMessage');
+
+            // Vérifier l'état initial
+            const checkedRadio = document.querySelector('input[name="organiques"]:checked');
+            if (checkedRadio && checkedRadio.value === 'oui') {
+                details.style.display = 'block';
+                message.style.display = 'block';
+            }
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'oui') {
+                        details.style.display = 'block';
+                        message.style.display = 'block';
+                    } else {
+                        details.style.display = 'none';
+                        message.style.display = 'none';
+                    }
+                });
             });
         });
 
+        // Charger l'historique des devis
+        async function loadDevisHistory() {
+            try {
+                const response = await fetch('/api/devis', {
+                    headers: {
+                        'x-user-email': userEmail,
+                        'x-user-pseudo': userPseudo
+                    }
+                });
+                const devis = await response.json();
+                
+                const historyContainer = document.getElementById('devisHistory');
+                if (devis.length === 0) {
+                    historyContainer.innerHTML = '<p>Aucun devis soumis pour le moment.</p>';
+                    return;
+                }
+
+                historyContainer.innerHTML = devis.map(devis => `
+                    <div class="devis-card" style="background: white; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <h3>Devis #${devis.id}</h3>
+                        <p><strong>Type:</strong> ${devis.type.join(', ')}</p>
+                        <p><strong>Description:</strong> ${devis.besoins || 'Non spécifiée'}</p>
+                        <p><strong>Budget estimé:</strong> ${devis.exclusivite === 'oui' ? 'Sur devis (exclusif)' : 'Sur devis'}</p>
+                        <p><strong>Deadline:</strong> ${devis.jours} jours</p>
+                        <p><strong>Date:</strong> ${new Date(devis.date).toLocaleDateString()}</p>
+                        <p><strong>Statut:</strong> ${devis.status}</p>
+                        <p><strong>Détails:</strong></p>
+                        <ul>
+                            <li>Organiques: ${devis.organiques}</li>
+                            <li>Terraforming: ${devis.terraforming}</li>
+                            <li>Painting: ${devis.painting}</li>
+                            <li>Type d'eau: ${devis.eau}</li>
+                            <li>Type d'arbres: ${devis.arbres}</li>
+                        </ul>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('devisHistory').innerHTML = '<p>Erreur lors du chargement de l\'historique</p>';
+            }
+        }
+
         // Gestion du formulaire
-        document.getElementById('devisForm').addEventListener('submit', function(e) {
+        document.getElementById('devisForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = {
+                exclusivite: document.querySelector('input[name="exclusivite"]:checked').value,
                 organiques: document.querySelector('input[name="organiques"]:checked').value,
+                organiques_grand: document.querySelector('input[name="organiques_grand"]')?.value || 0,
+                organiques_petit: document.querySelector('input[name="organiques_petit"]')?.value || 0,
+                organiques_tres_petit: document.querySelector('input[name="organiques_tres_petit"]')?.value || 0,
                 terraforming: document.querySelector('input[name="terraforming"]:checked').value,
                 painting: document.querySelector('input[name="painting"]:checked').value,
-                batiments: document.querySelector('input[name="batiments"]:checked').value
+                eau: document.querySelector('input[name="eau"]:checked').value,
+                arbres: document.querySelector('input[name="arbres"]:checked').value,
+                type: Array.from(document.querySelectorAll('input[name="type"]:checked')).map(cb => cb.value),
+                jours: document.querySelector('input[name="jours"]').value,
+                besoins: document.querySelector('textarea[name="besoins"]').value
             };
 
-            // Ici, vous pouvez envoyer les données au serveur
-            console.log('Données du devis:', formData);
-            
-            // Afficher un message de succès
-            alert('Votre demande de devis a été enregistrée. Nous vous contacterons bientôt pour discuter des détails.');
+            try {
+                const API_URL = import.meta.env.VITE_API_URL;
+                const response = await fetch(`${API_URL}/devis`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-user-email': userEmail,
+                        'x-user-pseudo': userPseudo
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Votre devis a été soumis avec succès !');
+                    document.getElementById('devisForm').reset();
+                    loadDevisHistory(); // Recharger l'historique
+                } else {
+                    alert('Erreur: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de la soumission du devis');
+            }
         });
+
+        // Charger l'historique au chargement de la page
+        loadDevisHistory();
     </script>
 </body>
 </html> 
